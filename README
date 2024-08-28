@@ -1,0 +1,74 @@
+This project demonstrates the output portion of a "Pulse Per Second"
+timer that can be integrated with CPUs to
+
+1.  Allow precise time setting and tracking via the pulse-per-second
+    output signal from a GPS unit.  Hardware support for this improves
+    accuracy due to lack of error from interrupt and software latency.
+
+2.  Integration with Ethernet controllers to improve the accuracy
+    of PTP (precision time protocol).
+
+This timer design is not novel.  I have seen microprocessors that
+integrate similar designs.
+
+This project has only a basic goal: It shows how the timer can produce
+and very finely adjust the frequency of a PPS output signal.
+
+PPS stands for "pulse per second", but the period does not have to be
+one second.  It's controlled by the value of pps_count in pps.v.
+
+This code causes the PPS output have a frequency of 1 KHz because that
+is easy for oscilloscopes to measure.
+
+The project runs on both the Tang Nano 9K and the Tang Nano 20K FPGA
+development boards.  Just open with corresponding project file using
+the Gowin IDE.
+
+Connect an oscilloscope or frequency counter to
+
+  Tang Nano 9k:  pin 63
+  Tang Nano 20k: pin 73
+
+You should see a signal with a frequency of approximately 1 KHz.  It
+probably won't be exact because the clocks in neither your FPGA board
+nor your oscilloscope are likely to be perfect.
+
+If you press button 2 pn the board, the FPGA will cycle among four
+values of ACCUM_INCR.  Two of the LEDs show which is selected.
+
+  0: A_INCR_NOMINAL_VAL = 32'hd5555555
+  1: A_INCR_1_00000_VAL = 32'hd555b733     Ideal values of these 3 will
+  2: A_INCR_1_00001_VAL = 32'hd5564303     differ from board to board or
+  3: A_INCR_1_00002_VAL = 32'hd556ced2     with scope calibration.
+
+The first you should not change.  It is the value that would yield
+exactly 1 KHz if your FPGA's and oscilloscope's clocks were perfect.
+
+When the first value is selected (no button press), note the frequency
+your scope measures.  Mine shows 0.999993 KHz.  Then run C program
+compute_accum_incr like this:
+
+  % ./compute_accum_incr 0.999993
+  A_INCR_1_00000_VAL for 1.00000 KHz: ia d555b733
+  A_INCR_1_00001_VAL for 1.00001 KHz: ia d5564303
+  A_INCR_1_00002_VAL for 1.00002 KHz: ia d556ced2
+                     For 1.00003 KHz: ia d5575aa2
+
+You can change the values for 1, 2, and 3 in top_X.v Then, when you
+press button 2 on the board
+
+   once:   You should see 1.00000 KHz
+   twice:  You should see 1.00001 KHz
+   thrice: You should see 1.00002 KHz measured on your scope.
+
+This assumes that your scope is capable and the temperature is not too
+different from when you built the FPGA image.
+
+Even if you don't bother rebuilding the images, you should still see the
+0.01 Hz change between settings 1 to 2 and 3 to 4.
+
+This shows the PPS timer design's ability to finely adjust the PPS output
+frequency.
+
+Note that this design yields some jitter.  This means that slower PPS
+frequencies are normally used.  One pulse per second is very common.

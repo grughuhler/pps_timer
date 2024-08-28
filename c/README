@@ -1,0 +1,8 @@
+This directory contains C program compute_accum_incr.
+
+It is intended as a helper for a PicoRV32 RISC-V soft core integration
+of the PPS timer, but is also helps to compute constants needed for
+this Verilog project.  See the main README.
+
+
+

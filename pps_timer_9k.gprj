@@ -1,0 +1,16 @@
+<?xml version="1" encoding="UTF-8"?>
+<!DOCTYPE gowin-fpga-project>
+<Project>
+    <Template>FPGA</Template>
+    <Version>5</Version>
+    <Device name="GW1NR-9C" pn="GW1NR-LV9QN88PC6/I5">gw1nr9c-004</Device>
+    <FileList>
+        <File path="src/edge_finder.v" type="file.verilog" enable="1"/>
+        <File path="src/gowin_rpll_pps_9k.v" type="file.verilog" enable="1"/>
+        <File path="src/pps.v" type="file.verilog" enable="1"/>
+        <File path="src/reset.v" type="file.verilog" enable="1"/>
+        <File path="src/top_9k.v" type="file.verilog" enable="1"/>
+        <File path="src/pps_timer_9k.cst" type="file.cst" enable="1"/>
+        <File path="src/pps_timer_9k.sdc" type="file.sdc" enable="1"/>
+    </FileList>
+</Project>
