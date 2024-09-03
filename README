@@ -67,3 +67,5 @@ frequency.
 
 Note that this design yields some jitter.  This means that slower PPS
 frequencies are normally used.  One pulse per second is very common.
+
+See https://youtu.be/IIL5N2uNmXY for a YouTube video on this design.

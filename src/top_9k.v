@@ -13,7 +13,7 @@ module top
 
    /* clk_pps is 120 MHz, Fcount is 100 MHz */
    parameter TIME_INCR_VAL = 10;
-   parameter PPS_COUNT_VAL = 'd100_000; /* count to 100,100 gives 1 KHz pps_pulse_out */
+   parameter PPS_COUNT_VAL = 'd100_000; /* count to 100,000 gives 1 KHz pps_pulse_out */
    parameter A_INCR_NOMINAL_VAL = 32'hd5555555; /* Yields Fcount = 100 MHz is 120 MHz */
    /* Edit these */
    parameter A_INCR_1_00000_VAL = 32'hd554c986;
