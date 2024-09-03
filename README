@@ -1,15 +1,8 @@
-This project demonstrates the output portion of a "Pulse Per Second"
-timer that can be integrated with CPUs to
+This project demonstrates how to implement counters whose rate of
+counting can be very precisely adjusted.
 
-1.  Allow precise time setting and tracking via the pulse-per-second
-    output signal from a GPS unit.  Hardware support for this improves
-    accuracy due to lack of error from interrupt and software latency.
-
-2.  Integration with Ethernet controllers to improve the accuracy
-    of PTP (precision time protocol).
-
-This timer design is not novel.  I have seen microprocessors that
-integrate similar designs.
+This design is not novel.  I have seen microprocessors that integrate
+similar designs.
 
 This project has only a basic goal: It shows how the timer can produce
 and very finely adjust the frequency of a PPS output signal.
@@ -42,7 +35,8 @@ values of ACCUM_INCR.  Two of the LEDs show which is selected.
   3: A_INCR_1_00002_VAL = 32'hd556ced2     with scope calibration.
 
 The first you should not change.  It is the value that would yield
-exactly 1 KHz if your FPGA's and oscilloscope's clocks were perfect.
+exactly 1 KHz if your FPGA's and oscilloscope's clocks were perfectly
+matched.
 
 When the first value is selected (no button press), note the frequency
 your scope measures.  Mine shows 0.999993 KHz.  Then run C program
@@ -61,8 +55,9 @@ press button 2 on the board
    twice:  You should see 1.00001 KHz
    thrice: You should see 1.00002 KHz measured on your scope.
 
-This assumes that your scope is capable and the temperature is not too
-different from when you built the FPGA image.
+This assumes that your scope is capable of this fine a measurement
+and the temperature is not too different from when you built the FPGA
+image.
 
 Even if you don't bother rebuilding the images, you should still see the
 0.01 Hz change between settings 1 to 2 and 3 to 4.

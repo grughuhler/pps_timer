@@ -64,7 +64,7 @@ module pps_timer
         time_incr <= TIME_INCR_VAL;
         accum_ctr <= 1'b0;
         pps_count <= PPS_COUNT_VAL; /* 1 KHz assuming 100 MHz Fcount */
-        pps_ctr <= 1'b0;
+        pps_ctr <= 1'b1;
         carry <= 1'b0;
         pps_pulse_out <= 1'b0;
      end else begin
@@ -81,7 +81,7 @@ module pps_timer
            if (pps_ctr < pps_count)
              pps_ctr <= pps_ctr + 32'b1;
            else
-             pps_ctr <= 32'b0;
+             pps_ctr <= 32'b1;
            /* Set the PPS output pulse with duty cycle ~25% */        
            if (pps_ctr < (pps_count >> 2))
              pps_pulse_out <= 1'b1;
@@ -91,10 +91,7 @@ module pps_timer
 
      end
 
-   /* This always block allows button2_edge to select the value of
-    * accum_incr
-    */
-   
+   /* Cause button2_edge to select value of accum_incr */
    always @(posedge clk_pps or negedge reset_pps_n)
      if (!reset_pps_n) begin
         a_incr_sel <= 2'b00;

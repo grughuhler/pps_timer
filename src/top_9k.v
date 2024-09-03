@@ -2,22 +2,23 @@
 
 module top
   (
-   input wire  clk_in, /* The 27 MHz input clock */
+   input wire  clk_in,         /* The 27 MHz input clock */
    input wire  reset_button,
-   input wire  button2,
-   input wire  pps_in,
-   output wire ts63,
-   output wire [1:0] leds,
-   output wire pps_pulse_out
+   input wire  button2,        /* Select from 4 accum_incr values */
+   input wire  pps_in,         /* Gets timestamped.  Not used yet. */
+   output wire ts63,           /* Prevents timestamp from being optimized out */
+   output wire [1:0] leds,     /* Shows which accum_incr value used */
+   output wire pps_pulse_out   /* Signal to monitor with scope */
    );
 
-   /* clk_pps is 60 MHz, Fcount is 50 MHz, but 120 MHz is possible */
-   parameter TIME_INCR_VAL = 20;
-   parameter PPS_COUNT_VAL = 50000;
-   parameter A_INCR_NOMINAL_VAL = 32'hd5555555;
-   parameter A_INCR_1_00000_VAL = 32'hd555b733;
-   parameter A_INCR_1_00001_VAL = 32'hd5564303;
-   parameter A_INCR_1_00002_VAL = 32'hd556ced2;
+   /* clk_pps is 120 MHz, Fcount is 100 MHz */
+   parameter TIME_INCR_VAL = 10;
+   parameter PPS_COUNT_VAL = 'd100_000; /* count to 100,100 gives 1 KHz pps_pulse_out */
+   parameter A_INCR_NOMINAL_VAL = 32'hd5555555; /* Yields Fcount = 100 MHz is 120 MHz */
+   /* Edit these */
+   parameter A_INCR_1_00000_VAL = 32'hd554c986;
+   parameter A_INCR_1_00001_VAL = 32'hd5555555;
+   parameter A_INCR_1_00002_VAL = 32'hd555e124;
 
    wire        clk_pps;
    wire        button2_pulse;
@@ -29,7 +30,7 @@ module top
    /* Create the clock used for the pps timer */
    Gowin_rPLL_PPS_9K rpll_pps
      (
-      .clkout(clk_pps), /* 60 MHz */
+      .clkout(clk_pps), /* 120 MHz */
       .clkin(clk_in)
       );
 
